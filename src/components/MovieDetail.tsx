@@ -39,38 +39,35 @@ export default function MovieDetail({
 		return <CircularProgress />;
 	}
 
-	/* opening multiple tabs with 1 onClick of a Button/Link doesnt seem legit. (It depends on the user's browser and its settings)
-
-	function openMultipleTabs() {
-		const urls = [
-			{
-				url: wikipediaPageUrl,
-				name: "wikipedia",
-			},
-			{
-				url: imdbPageUrl,
-				name: "imdb",
-			},
-		];
-
-		urls.forEach((url) => {
-			window.open(url.url, url.name);
-		});
-	}*/
-
 	//we got the real data or the dummy could not found data from getWikipediaMovieData
 	return (
-		<Box p={2} border={1} overflow="auto" maxHeight="80vh">
+		<Box
+			p={2}
+			border={1}
+			overflow="auto"
+			maxHeight="80vh"
+			data-testid="movieDetailData"
+		>
 			<h2>{title}</h2>
 			<p>{extract}</p>
 			<List>
 				<ListItem key="1">
-					<Link href={wikipediaPageUrl} target="_blank" rel="noreferrer">
+					<Link
+						href={wikipediaPageUrl}
+						target="_blank"
+						rel="noreferrer"
+						data-testid="wikiLink"
+					>
 						Wikipedia page
 					</Link>
 				</ListItem>
 				<ListItem key="2">
-					<Link href={imdbPageUrl} target="_blank" rel="noreferrer">
+					<Link
+						href={imdbPageUrl}
+						target="_blank"
+						rel="noreferrer"
+						data-testid="imdbLink"
+					>
 						IMDB page
 					</Link>
 				</ListItem>

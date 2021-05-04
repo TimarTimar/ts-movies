@@ -83,12 +83,13 @@ export default function App() {
 	};
 	//SearchBar component onClick
 	const handleSearchButtonClick = () => {
-		if (!searchFieldValue.trim()) {
-			return;
-		}
 		setDualMovieListState("searched");
 		getSearchedMovies({ variables: { query: searchFieldValue } });
 	};
+
+	//SearchBar component Button disabled while no searchParam given
+	const isSearchBarButtonDisabled = () =>
+		searchFieldValue.trim() === "" ? true : false;
 
 	return (
 		<Grid container spacing={3}>
@@ -96,6 +97,7 @@ export default function App() {
 				<SearchBar
 					handleSearchFieldChange={handleSearchFieldChange}
 					handleSearchButtonClick={handleSearchButtonClick}
+					isSearchBarButtonDisabled={isSearchBarButtonDisabled}
 				/>
 			</Grid>
 			{getRelatedError || getSearchedError ? (

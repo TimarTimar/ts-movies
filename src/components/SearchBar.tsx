@@ -5,6 +5,7 @@ import { Button, Grid, TextField } from "@material-ui/core";
 interface SearchBarProps {
 	handleSearchFieldChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	handleSearchButtonClick: () => void;
+	isSearchBarButtonDisabled: () => boolean;
 }
 
 export default function SearchBar(props: SearchBarProps) {
@@ -27,7 +28,11 @@ export default function SearchBar(props: SearchBarProps) {
 				></TextField>
 			</Grid>
 			<Grid item xs={5}>
-				<Button variant="outlined" onClick={props.handleSearchButtonClick}>
+				<Button
+					variant="outlined"
+					onClick={props.handleSearchButtonClick}
+					disabled={props.isSearchBarButtonDisabled()}
+				>
 					Search
 				</Button>
 			</Grid>

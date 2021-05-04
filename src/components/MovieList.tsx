@@ -29,10 +29,9 @@ export default function MovieList({
 		/*initial state*/
 		return <MessageCard message={"1. Let's type something and click search"} />;
 	}
-
 	if (loading) {
 		return <CircularProgress />;
-	} else if (!myList || myList.length === 0) {
+	} else if (myList.length === 0) {
 		return (
 			<MessageCard
 				message={"Could not found anything please try other words"}
