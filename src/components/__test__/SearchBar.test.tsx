@@ -18,14 +18,13 @@ it("Searchbar renders with proper props", () => {
 		/>
 	);
 
-	//has button
-
 	const myButton = wrapper.find(Button);
-	expect(myButton.prop("onClick")).toBeTruthy();
 	expect(myButton.prop("disabled")).toBeTruthy();
+	expect(myButton.prop("onClick")).toBeTruthy();
 
-	//has TextField
 	const myInput = wrapper.find(TextField);
-	expect(myInput.prop("onChange")).toBeTruthy();
 	expect(myInput.prop("label")).toBe("Search for Movies");
+	expect(myInput.prop("onChange")).toBeTruthy();
+	myInput.simulate("change", { target: { value: "value" } });
+	expect(onChangeMock).toBeCalled();
 });

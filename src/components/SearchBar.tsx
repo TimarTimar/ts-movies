@@ -8,30 +8,34 @@ interface SearchBarProps {
 	isSearchBarButtonDisabled: () => boolean;
 }
 
-export default function SearchBar(props: SearchBarProps) {
+export default function SearchBar({
+	handleSearchFieldChange,
+	handleSearchButtonClick,
+	isSearchBarButtonDisabled,
+}: SearchBarProps) {
 	return (
 		<Grid
 			container
 			direction="row"
 			justify="space-between"
 			alignItems="center"
-			spacing={4}
+			spacing={3}
 		>
 			<Grid item xs={7}>
 				<TextField
 					id="outlined-basic"
 					label="Search for Movies"
-					variant="outlined"
-					onChange={props.handleSearchFieldChange}
+					variant="standard"
 					size="small"
 					fullWidth
+					onChange={handleSearchFieldChange}
 				></TextField>
 			</Grid>
 			<Grid item xs={5}>
 				<Button
 					variant="outlined"
-					onClick={props.handleSearchButtonClick}
-					disabled={props.isSearchBarButtonDisabled()}
+					onClick={handleSearchButtonClick}
+					disabled={isSearchBarButtonDisabled()}
 				>
 					Search
 				</Button>

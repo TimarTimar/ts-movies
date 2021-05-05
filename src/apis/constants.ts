@@ -14,3 +14,6 @@ export const WIKIPEDIA_BASE_URL = " https://en.wikipedia.org/?curid=";
 Cache for 1 year*/
 export const WIKIPEDIA_GET_FIRST_P_BY_GSRSEARCH =
 	"https://en.wikipedia.org/w/api.php?action=query&origin=*&generator=search&prop=extracts&gsrlimit=1&exintro=1&explaintext=1&format=json&maxage=31536000&gsrsearch=";
+
+//if a request did not found anything return this string somewhere
+export const NOT_FOUND_ERROR_CODE = "[err#404]";

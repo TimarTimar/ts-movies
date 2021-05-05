@@ -9,12 +9,13 @@ import {
 	ListItem,
 } from "@material-ui/core";
 import MessageCard from "./MessageCard";
+import { NOT_FOUND_ERROR_CODE } from "../apis/constants";
 
 export interface MovieDetailProps {
 	data: {
 		title: string;
 		extract: string;
-		wikipediaPageUrl: string;
+		wikipediaPageUrl: string | null;
 		imdbPageUrl: string;
 	};
 	handleRecommendedClick: () => void;
@@ -30,7 +31,7 @@ export default function MovieDetail({
 	if (!title && !loading) {
 		return (
 			<MessageCard
-				message={"2. Click the title from one of the search result's"}
+				message={"2. Click the title from one of the search results"}
 			/>
 		);
 	}
@@ -45,31 +46,37 @@ export default function MovieDetail({
 			p={2}
 			border={1}
 			overflow="auto"
-			maxHeight="80vh"
+			maxHeight="75vh"
 			data-testid="movieDetailData"
 		>
 			<h2>{title}</h2>
 			<p>{extract}</p>
 			<List>
-				<ListItem key="1">
-					<Link
-						href={wikipediaPageUrl}
-						target="_blank"
-						rel="noreferrer"
-						data-testid="wikiLink"
-					>
-						Wikipedia page
-					</Link>
-				</ListItem>
+				{wikipediaPageUrl && (
+					<ListItem key="1">
+						<Link
+							href={wikipediaPageUrl}
+							target="_blank"
+							rel="noreferrer"
+							data-testid="wikiLink"
+						>
+							Wikipedia page
+						</Link>
+					</ListItem>
+				)}
 				<ListItem key="2">
-					<Link
-						href={imdbPageUrl}
-						target="_blank"
-						rel="noreferrer"
-						data-testid="imdbLink"
-					>
-						IMDB page
-					</Link>
+					{imdbPageUrl.includes(NOT_FOUND_ERROR_CODE) ? (
+						<p data-testid="imdbLink">{imdbPageUrl}</p>
+					) : (
+						<Link
+							href={imdbPageUrl}
+							target="_blank"
+							rel="noreferrer"
+							data-testid="imdbLink"
+						>
+							IMDB page
+						</Link>
+					)}
 				</ListItem>
 			</List>
 			<Button variant="outlined" fullWidth onClick={handleRecommendedClick}>

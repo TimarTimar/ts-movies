@@ -8,14 +8,20 @@ export interface MovieListItemProps {
 	name: string;
 	score: number;
 	genres: { id: string; name: string }[];
+	releaseDate: string | null;
 	handleMovieItemTitleClick: (e: React.MouseEvent) => void;
-	releaseDate: string | undefined;
 }
 
-export default function MovieListItem(props: MovieListItemProps) {
-	//props.releaseDate is possibly null-> moment will convert null to NaN:string
-	const releaseDateYear = moment(props.releaseDate).year();
-
+export default function MovieListItem({
+	id,
+	name,
+	score,
+	genres,
+	handleMovieItemTitleClick,
+	releaseDate,
+}: MovieListItemProps) {
+	//releaseDate is possibly null-> moment will convert null to NaN:string
+	const releaseDateYear = moment(releaseDate).year();
 	return (
 		<Box
 			p={2}
@@ -26,19 +32,19 @@ export default function MovieListItem(props: MovieListItemProps) {
 		>
 			{/*IMPORTANT: i use e.target.id to setSelectedMovie. Api requests need [id, name, relaseDateYear] for get MovieDetail . */}
 			<Button
-				id={`${props.id},${props.name},${releaseDateYear}`}
-				title={`${props.name} - (${releaseDateYear})`}
-				onClick={props.handleMovieItemTitleClick}
+				id={`${id},${name},${releaseDateYear}`}
+				title={`${name} - (${releaseDateYear})`}
+				onClick={handleMovieItemTitleClick}
 				fullWidth
 			>
-				{props.name}
+				{name}
 			</Button>
-			Score: {props.score === 0 ? "?" : props.score}
-			<Grid container direction="row" spacing={1}>
-				{props.genres.slice(0, 4).map((item) => (
-					<Grid item key={item.id}>
-						{item.name}
-					</Grid>
+			<p>Score: {score === 0 ? "?" : score}</p>
+			<Grid container direction="row" spacing={2} data-testid="genresContainer">
+				{genres.slice(0, 4).map(({ id, name }) => (
+					<Box key={id} p={1}>
+						{name}
+					</Box>
 				))}
 			</Grid>
 		</Box>

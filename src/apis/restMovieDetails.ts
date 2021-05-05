@@ -3,9 +3,9 @@ import axios from "axios";
 import {
 	WIKIPEDIA_GET_FIRST_P_BY_GSRSEARCH,
 	WIKIPEDIA_BASE_URL,
-	TMDB_GET_IMDB_MOVIE_TITLE_ID_BY_TMDB_ID,
 	IMDB_BASE_URL,
-} from "./urls";
+	NOT_FOUND_ERROR_CODE,
+} from "./constants";
 
 interface wikipediaPageData {
 	title: string;
@@ -27,11 +27,10 @@ export const getWikipediaMovieData = async (
 
 		//If it couldn't find any page by our searchParam. We will send a MovieDetails like object to show to the user.
 		if (!response?.data?.query?.pages) {
-			console.log(`Could not find Wikipedia page for: ${gsrsearch}`);
 			return {
-				title: "Sorry",
+				title: NOT_FOUND_ERROR_CODE,
 				extract: `Could not find Wikipedia page for: ${gsrsearch}`,
-				wikipediaPageUrl: "https://www.wikipedia.org/",
+				wikipediaPageUrl: null,
 			};
 		}
 
@@ -57,10 +56,10 @@ export const getWikipediaMovieData = async (
 export const getImdbPageUrl = async (tmdb_Id: string) => {
 	try {
 		const response = await axios.get(
-			TMDB_GET_IMDB_MOVIE_TITLE_ID_BY_TMDB_ID(tmdb_Id)
+			`https://api.themoviedb.org/3/movie/${tmdb_Id}/external_ids?api_key=${process.env.REACT_APP_TMDB_KEY}`
 		);
-		const imdbPageUrl = !response?.data
-			? `Could not find IMDB external link for this TMDB ID: ${tmdb_Id}`
+		const imdbPageUrl = !response?.data?.imdb_id
+			? `${NOT_FOUND_ERROR_CODE} Could not find IMDB external link for this TMDB ID: ${tmdb_Id}`
 			: `${IMDB_BASE_URL}${response.data.imdb_id}`;
 
 		return imdbPageUrl;
